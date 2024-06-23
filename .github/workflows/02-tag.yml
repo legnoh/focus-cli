@@ -1,0 +1,27 @@
+name: 02. Bump & Tag
+
+on:
+  workflow_run:
+    workflows:
+      - 01. Build & Test
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  tagging:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }} || ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check Tag version
+        run:
+          echo "main_tag=$(git describe --tags)" >> $GITHUB_ENV
+      - name: Bump Version & Tagging
+        uses: anothrNick/github-tag-action@1.69.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOYABLE_GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch

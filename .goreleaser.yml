@@ -1,0 +1,38 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - binary: focus
+    goos: ['darwin']
+    ldflags:
+      - -s -w -X github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}/cmd.version={{ .Version }}
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+brews:
+  - commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{.Tag}}"
+    directory: Formula
+    caveats: |
+        Please check usage at README:
+            https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}/blob/main/README.md
+    homepage: "https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}"
+    description: "Get macOS Focus mode via CLI"
+    license: MIT
+    skip_upload: auto
+    test: |
+      system "#{bin}/focus --help"
+    repository:
+      owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
+      name: homebrew-etc
+      branch: main
