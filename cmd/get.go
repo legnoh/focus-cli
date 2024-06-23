@@ -37,7 +37,6 @@ func getFocusConfig(cmd *cobra.Command, args []string) {
 		hour          = now.Hour()
 		minute        = now.Minute()
 		weekday       = now.Weekday()
-		nowhm         = hour*60 + minute
 		latestStarted = 1440
 		latestFocused = ModeInfo{Name: "Off"}
 	)
@@ -61,6 +60,7 @@ func getFocusConfig(cmd *cobra.Command, args []string) {
 		// focus set by schedule trigger
 		for _, modeConfig := range modeConfigurations.Data[0].ModeConfigurations {
 			for _, t := range modeConfig.Triggers.Triggers {
+				nowhm := hour*60 + minute
 				log.Debugf("mode: %s, trigger: %+v", modeConfig.Mode.Name, t)
 
 				if t.EnabledSetting == TriggerDisabled {
@@ -80,6 +80,9 @@ func getFocusConfig(cmd *cobra.Command, args []string) {
 				// includes midnight
 				if start > end {
 					end += 1440
+					if nowhm < start {
+						nowhm += 1440
+					}
 				}
 
 				if nowhm >= start && nowhm < end {
