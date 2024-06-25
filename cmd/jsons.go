@@ -138,14 +138,17 @@ func readJson(filePath string, configs any) error {
 	return nil
 }
 
-func isWeekday(jsonInt int, weekDay time.Weekday) bool {
-	var targetBit uint64
+func getTargetBit(weekDay time.Weekday) int {
 	if weekDay == time.Sunday {
-		targetBit = uint64(6)
+		return 6
 	} else {
-		targetBit = uint64(weekDay - 1)
+		return int(weekDay) - 1
 	}
-	judge := int(weekDay) == (jsonInt>>targetBit)&1
+}
+
+func isWeekday(jsonInt int, weekDay time.Weekday) bool {
+	targetBit := getTargetBit(weekDay)
+	judge := (jsonInt>>targetBit)&1 == 1
 	log.Debugf("[isWeekday] bit: %07b, target: %d, judge: %t", jsonInt, targetBit, judge)
 	return judge
 }
