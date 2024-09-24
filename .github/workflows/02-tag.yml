@@ -21,7 +21,7 @@ jobs:
         run:
           echo "main_tag=$(git describe --tags)" >> $GITHUB_ENV
       - name: Bump Version & Tagging
-        uses: anothrNick/github-tag-action@1.70.0
+        uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOYABLE_GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
