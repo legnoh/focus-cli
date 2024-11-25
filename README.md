@@ -5,7 +5,6 @@ Get macOS Focus mode via CLI
 ## install
 
 ```sh
-## install
 brew install legnoh/etc/mac-focus-cli
 ```
 
