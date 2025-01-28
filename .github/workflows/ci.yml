@@ -31,7 +31,7 @@ jobs:
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # for tagging
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
