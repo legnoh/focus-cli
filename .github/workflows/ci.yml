@@ -46,12 +46,19 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DEFAULT_BUMP: patch
 
+      - name: Get GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: github-app
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.github-app.outputs.token }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           DESCRIPTION: Get macOS Focus mode via CLI
           HOMEBREW_REPO_NAME: homebrew-etc
