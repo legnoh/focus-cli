@@ -21,7 +21,7 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           args: build --snapshot
-        env: &goreleaser_envs
+        env:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           DESCRIPTION: Get macOS Focus mode via CLI
           HOMEBREW_REPO_NAME: homebrew-etc
@@ -61,4 +61,6 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ steps.github-app.outputs.token }}
-          <<: *goreleaser_envs
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          DESCRIPTION: Get macOS Focus mode via CLI
+          HOMEBREW_REPO_NAME: homebrew-etc
