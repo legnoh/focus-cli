@@ -21,9 +21,10 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           args: build --snapshot
-        env:
+        env: &goreleaser_envs
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
           DESCRIPTION: Get macOS Focus mode via CLI
+          HOMEBREW_REPO_NAME: homebrew-etc
 
   publish:
     needs: build
@@ -46,19 +47,18 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           DEFAULT_BUMP: patch
 
-      - name: Get GitHub App Token
+      - name: Get GitHub App Token(for all repositories)
         uses: actions/create-github-app-token@v1
         id: github-app
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
-      - name: Run GoReleaser
+      - name: Build & Create GitHub Release & Update Homebrew Formula
         uses: goreleaser/goreleaser-action@v6
         with:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ steps.github-app.outputs.token }}
-          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-          DESCRIPTION: Get macOS Focus mode via CLI
-          HOMEBREW_REPO_NAME: homebrew-etc
+          <<: *goreleaser_envs
