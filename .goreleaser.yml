@@ -27,12 +27,13 @@ brews:
         Please check usage at README:
             https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}/blob/main/README.md
     homepage: "https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}"
-    description: "Get macOS Focus mode via CLI"
+    description: |
+      {{ .Env.DESCRIPTION }}
     license: MIT
     skip_upload: auto
     test: |
       system "#{bin}/focus --help"
     repository:
       owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
-      name: homebrew-etc
+      name: "{{ .Env.HOMEBREW_REPO_NAME }}"
       branch: main
