@@ -3,7 +3,7 @@ module github.com/legnoh/focus-cli
 go 1.23.5
 
 require (
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.10.2
 )
 
