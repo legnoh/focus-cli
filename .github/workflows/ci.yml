@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-go@v6
 
       - name: Run GoReleaser Build
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           args: build --snapshot
         env:
@@ -58,7 +58,7 @@ jobs:
           owner: ${{ github.repository_owner }}
 
       - name: Build & Create GitHub Release & Update Homebrew Formula
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           args: release --clean
         env:
