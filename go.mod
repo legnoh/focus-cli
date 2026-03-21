@@ -1,6 +1,6 @@
 module github.com/legnoh/focus-cli
 
-go 1.23.5
+go 1.26.1
 
 require (
 	github.com/sirupsen/logrus v1.9.4
