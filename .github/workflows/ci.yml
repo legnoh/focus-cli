@@ -44,6 +44,8 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
 
       - name: Bump version & Tagging
         uses: anothrNick/github-tag-action@1.75.0
